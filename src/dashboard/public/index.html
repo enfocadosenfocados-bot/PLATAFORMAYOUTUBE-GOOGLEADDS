@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aguamarina Joyería — YouTube Auto-Upload & AI Metadata Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="brand-badge">
+        <span class="gem-icon">💎</span>
+        <h1>AGUAMARINA JOYERÍA</h1>
+      </div>
+      <p class="subtitle">YouTube Auto-Upload Web Dashboard & AI Metadata Generator</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-navigation">
+      <button type="button" class="tab-btn active" id="tab-btn-youtube">🎥 Canal de YouTube</button>
+      <button type="button" class="tab-btn" id="tab-btn-ads">📢 Google & YouTube Ads</button>
+    </div>
+
+    <main class="dashboard-content">
+      <!-- YouTube Panel -->
+      <div id="panel-youtube" class="tab-panel dashboard-grid">
+        <!-- Left Column: Video Dropzone & AI Metadata -->
+        <section class="card glass-card">
+          <h2 class="card-title">1. Archivo de Video & Contexto IA</h2>
+          
+          <!-- Dropzone -->
+          <div id="dropzone" class="dropzone">
+            <div class="dropzone-content">
+              <span class="upload-icon">📁</span>
+              <p class="drop-text">Arrastra y suelta tu archivo de video aquí</p>
+              <p class="file-types">MP4, WEBM, MOV (Máx. 2GB)</p>
+              <button type="button" class="btn btn-secondary" id="btn-browse">Seleccionar Archivo</button>
+              <input type="file" id="video-file-input" accept="video/mp4,video/webm,video/quicktime" hidden>
+            </div>
+            <div id="file-info" class="file-info hidden">
+              <span class="file-icon">🎥</span>
+              <span id="file-name" class="file-name">video.mp4</span>
+              <span id="file-size" class="file-size">0 MB</span>
+            </div>
+            <div id="video-details-info" class="hidden" style="width:100%; padding:10px 16px; margin-top:8px; background:rgba(0,180,180,0.08); border:1px solid rgba(0,180,180,0.25); border-radius:10px; font-size:0.85rem; color:var(--text-secondary);">
+              <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:center;">
+                <span>📐 <strong>Dimensiones:</strong> <span id="video-dimensions">--</span></span>
+                <span>⏱️ <strong>Duración:</strong> <span id="video-duration">--</span></span>
+                <span id="video-type-badge" style="padding:3px 10px; border-radius:20px; font-weight:700; font-size:0.8rem;">--</span>
+              </div>
+              <div id="video-format-tip" style="margin-top:6px; font-size:0.8rem; opacity:0.8;"></div>
+            </div>
+          </div>
+
+          <!-- Gemini AI Context Input -->
+          <div class="form-group">
+            <label for="context-prompt">Prompt / Descripción Corta del Producto:</label>
+            <textarea id="context-prompt" placeholder="Ej: Anillo de compromiso en oro blanco de 18k con diamante brillante..." rows="3"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="category-select">Categoría:</label>
+              <select id="category-select">
+                <option value="Joyería Fina">Joyería Fina / Lujo</option>
+                <option value="Anillos de Bodas">Anillos de Bodas</option>
+                <option value="Collares & Dijes">Collares & Dijes</option>
+                <option value="Promociones">Promociones & Ofertas</option>
+              </select>
+            </div>
+            <div class="form-group half">
+              <label for="language-select">Idioma:</label>
+              <select id="language-select">
+                <option value="es">Español</option>
+                <option value="en">Inglés</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="button" id="btn-generate-metadata" class="btn btn-ai">
+            ✨ Generar Metadatos con Gemini AI
+          </button>
+
+          <!-- Metadata Form -->
+          <div class="metadata-fields">
+            <div class="form-group">
+              <label for="title-input">Título SEO para YouTube:</label>
+              <input type="text" id="title-input" placeholder="Título optimizado con Inteligencia Artificial...">
+            </div>
+
+            <div class="form-group">
+              <label for="desc-input">Descripción del Video:</label>
+              <textarea id="desc-input" rows="4" placeholder="Descripción con hashtags y llamado a la acción..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="tags-input">Etiquetas (separadas por comas):</label>
+              <input type="text" id="tags-input" placeholder="aguamarina, joyería, oro 18k, diamantes...">
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Thumbnail Generator & Upload Execution -->
+        <section class="card glass-card">
+          <h2 class="card-title">2. Miniatura & Publicación</h2>
+
+          <!-- Thumbnail Generator -->
+          <div class="thumbnail-section">
+            <div class="form-row">
+              <div class="form-group half">
+                <label for="theme-select">Estilo de Miniatura:</label>
+                <select id="theme-select">
+                  <option value="glassmorphic">Aquamarine Glassmorphic</option>
+                  <option value="luxury_gold">Gold Obsidian Luxury</option>
+                </select>
+              </div>
+              <div class="form-group half align-end">
+                <button type="button" id="btn-generate-thumbnail" class="btn btn-secondary">
+                  🖼️ Generar Miniatura Automática
+                </button>
+              </div>
+            </div>
+
+            <!-- Custom Thumbnail Upload -->
+            <div style="margin-top:12px; padding:14px; background:rgba(212,175,55,0.06); border:1px solid rgba(212,175,55,0.25); border-radius:10px;">
+              <label for="custom-thumbnail-input" style="display:flex; align-items:center; gap:8px; margin-bottom:8px; font-weight:600; color:var(--accent-gold); font-size:0.95rem; cursor:pointer;">
+                📤 O sube tu propia miniatura personalizada:
+              </label>
+              <input type="file" id="custom-thumbnail-input" accept="image/png,image/jpeg,image/jpg" style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.3); border-radius:8px; color:var(--text-main); font-size:0.9rem; cursor:pointer;">
+              <div style="margin-top:8px; font-size:0.78rem; color:var(--text-secondary); line-height:1.5;">
+                📏 <strong>Tamaño recomendado:</strong> 1280 × 720 px (relación 16:9)<br>
+                📦 <strong>Formatos:</strong> JPG o PNG · Máximo 2 MB<br>
+                💡 <strong>Mínimo:</strong> 640 × 360 px
+              </div>
+            </div>
+
+            <!-- Upload Photo for Thumbnail (for auto-generated) -->
+            <div class="form-group margin-bottom-sm" style="margin-top:12px; margin-bottom:16px;">
+              <label for="thumbnail-product-img-input" style="display:block; margin-bottom:6px;">Foto de Producto o Modelo (para miniatura automática):</label>
+              <input type="file" id="thumbnail-product-img-input" accept="image/*" style="width:100%; padding:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.3); border-radius:8px; color:var(--text-main); font-size:0.9rem; cursor:pointer;">
+            </div>
+
+            <div class="thumbnail-preview-box" id="thumbnail-preview-box">
+              <img id="thumbnail-preview-img" src="" alt="Miniatura Vista Previa" class="hidden">
+              <div id="thumbnail-placeholder" class="thumbnail-placeholder">
+                <span>1280 x 720 HD Preview</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload Options -->
+          <div class="upload-options">
+            <div class="form-group">
+              <label for="privacy-select">Visibilidad en YouTube:</label>
+              <select id="privacy-select">
+                <option value="unlisted">Oculto (Unlisted)</option>
+                <option value="private">Privado (Private)</option>
+                <option value="public">Público (Public)</option>
+              </select>
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="dry-run-checkbox" checked>
+              <label for="dry-run-checkbox">Modo Simulación (DRY_RUN_MODE — Sin consumo de cuotas reales)</label>
+            </div>
+
+            <button type="button" id="btn-upload" class="btn btn-primary btn-large">
+              🚀 Subir Video a YouTube
+            </button>
+          </div>
+
+          <!-- Progress Log & Console -->
+          <div class="console-section">
+            <h3 class="console-title">Consola de Progreso en Tiempo Real</h3>
+            <div class="progress-bar-container">
+              <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+            <div id="console-log" class="console-log">
+              <div class="log-line info">[00:00:00] Dashboard listo. Selecciona un video y genera metadatos para iniciar.</div>
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div id="result-card" class="result-card hidden">
+            <h3>✅ ¡Carga Completada Con Éxito!</h3>
+            <p id="result-video-id">ID de Video: yt_mock_123456</p>
+            <a id="result-video-url" href="#" target="_blank" class="yt-link">Ver Video en YouTube ↗</a>
+          </div>
+        </section>
+      </div>
+
+      <!-- Ads Panel -->
+      <div id="panel-ads" class="tab-panel dashboard-grid hidden">
+        <!-- Left Column: Campaign Configuration -->
+        <section class="card glass-card">
+          <h2 class="card-title">1. Configuración de la Campaña</h2>
+          
+          <div class="form-group">
+            <label for="ads-type-select">Tipo de Campaña:</label>
+            <select id="ads-type-select">
+              <option value="SEARCH">Búsqueda en Google (Search Ads)</option>
+              <option value="VIDEO">Video en YouTube (YouTube Video Ads)</option>
+              <option value="DISPLAY">Display de Google (Banners Visuales)</option>
+              <option value="PERFORMANCE_MAX">Máximo Rendimiento (Performance Max - PMax)</option>
+              <option value="SHOPPING">Google Shopping (Anuncios de Ficha de Producto)</option>
+              <option value="LOCAL">Local Ads (Tráfico a la Tienda Física)</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Explanation & Tips Panel -->
+          <div class="ads-tips-box" id="ads-tips-box">
+            <h4 class="tips-box-title">💡 ¿Cómo funciona esta campaña?</h4>
+            <p class="tips-box-text" id="ads-tips-text">
+              <strong>Búsqueda en Google:</strong> Tus anuncios de texto aparecerán cuando la gente busque términos específicos. <br><br>
+              <em>💎 Tip de Joyería:</em> Usa palabras clave de intención alta como "comprar anillo de compromiso oro 18k" para captar clientes listos para comprar, en lugar de términos sueltos como "anillos".
+            </p>
+          </div>
+
+          <div class="form-group">
+            <label for="ads-name-input">Nombre de la Campaña:</label>
+            <input type="text" id="ads-name-input" placeholder="Ej: Campaña Anillos Aguamarina - Agosto 2026">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="ads-budget-input">Presupuesto Diario (USD):</label>
+              <input type="number" id="ads-budget-input" value="10" min="1" step="0.5">
+            </div>
+            <div class="form-group half">
+              <label for="ads-url-input">URL de Destino (Final URL):</label>
+              <input type="url" id="ads-url-input" value="https://aguamarinajoyeria.com">
+            </div>
+          </div>
+
+          <!-- Campaign Duration (Start & End Date) -->
+          <div class="form-row" style="margin-top:12px;">
+            <div class="form-group half">
+              <label for="ads-start-date">📅 Fecha de Inicio (Duración):</label>
+              <input type="date" id="ads-start-date">
+            </div>
+            <div class="form-group half">
+              <label for="ads-end-date">📅 Fecha de Finalización (Duración):</label>
+              <input type="date" id="ads-end-date">
+            </div>
+          </div>
+
+          <!-- Keywords Field (Only for SEARCH) -->
+          <div class="form-group" id="ads-keywords-group">
+            <label for="ads-keywords-input">Palabras Clave (separadas por comas):</label>
+            <textarea id="ads-keywords-input" placeholder="anillo compromiso, joyeria aguamarina, oro 18k, diamantes..." rows="3"></textarea>
+          </div>
+
+          <!-- YouTube Video ID Field (Only for VIDEO, PMAX, hidden by default) -->
+          <div class="form-group hidden" id="ads-video-id-group">
+            <label for="ads-video-id-input">ID del Video de YouTube para el anuncio:</label>
+            <input type="text" id="ads-video-id-input" placeholder="Ej: yt_mock_123456 o el ID del video que subiste">
+          </div>
+
+          <!-- Banner Image URL Field (Only for DISPLAY, hidden by default) -->
+          <div class="form-group hidden" id="ads-display-group">
+            <label for="ads-image-url">URL de Imagen del Banner (Formatos 300x250, 728x90, etc.):</label>
+            <input type="url" id="ads-image-url" placeholder="https://aguamarinajoyeria.com/banners/anillo-luxury.jpg">
+          </div>
+
+          <!-- Google Merchant Center ID Field (Only for SHOPPING, hidden by default) -->
+          <div class="form-group hidden" id="ads-shopping-group">
+            <label for="ads-merchant-id">Google Merchant Center ID (Catálogo):</label>
+            <input type="text" id="ads-merchant-id" placeholder="Ej: 504192841 (Identificador de tu inventario)">
+          </div>
+
+          <!-- Local Store Fields (Only for LOCAL, hidden by default) -->
+          <div class="form-group hidden" id="ads-local-group">
+            <label for="ads-store-address">Dirección Física de la Joyería (Registrada en Google Perfil de Empresa):</label>
+            <input type="text" id="ads-store-address" value="Calle Principal 123, Zona Centro">
+            <label for="ads-store-radius" class="margin-top-sm" style="display:block; margin-top:10px;">Radio de Cobertura de Anuncios (Kilómetros):</label>
+            <input type="number" id="ads-store-radius" value="15" min="1">
+          </div>
+        </section>
+
+        <!-- Right Column: Ad Creative & Launch -->
+        <section class="card glass-card">
+          <h2 class="card-title">2. Creatividad & Lanzamiento</h2>
+
+          <!-- Creative Fields for SEARCH -->
+          <div id="ads-creative-search-group">
+            <div class="form-group">
+              <label>Títulos del Anuncio (Recomendado rellenar los 3):</label>
+              <input type="text" id="ads-headline-1" placeholder="Título 1 (Ej: Joyería Aguamarina)" class="margin-bottom-sm">
+              <input type="text" id="ads-headline-2" placeholder="Título 2 (Ej: Anillos de Compromiso en Oro)" class="margin-bottom-sm">
+              <input type="text" id="ads-headline-3" placeholder="Título 3 (Ej: Envíos a Todo el País)">
+            </div>
+            <div class="form-group">
+              <label>Descripciones del Anuncio:</label>
+              <textarea id="ads-desc-1" placeholder="Descripción 1 (Ej: Encuentra el anillo de bodas perfecto fabricado en oro de 18k...)" rows="2" class="margin-bottom-sm"></textarea>
+              <textarea id="ads-desc-2" placeholder="Descripción 2 (Ej: Colecciones exclusivas y diseños a medida. Visítanos en nuestra web.)" rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Creative Fields for VIDEO (hidden by default) -->
+          <div id="ads-creative-video-group" class="hidden">
+            <div class="form-group">
+              <label for="ads-video-headline">Título del Anuncio en Video:</label>
+              <input type="text" id="ads-video-headline" placeholder="Ej: Colección Especial de Diamantes">
+            </div>
+            <div class="form-group">
+              <label for="ads-video-cta">Texto del Botón (Call to Action):</label>
+              <select id="ads-video-cta">
+                <option value="COMPRAR_AHORA">Comprar Ahora</option>
+                <option value="MAS_INFORMACION">Más Información</option>
+                <option value="VISITAR_SITIO">Visitar Sitio Web</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ads-video-desc">Descripción del Anuncio en Video:</label>
+              <textarea id="ads-video-desc" placeholder="Ej: Compra joyería fina y personalizada con envíos nacionales." rows="2"></textarea>
+            </div>
+          </div>
+
+          <!-- Launch Actions -->
+          <div class="upload-options">
+            <div class="checkbox-group">
+              <input type="checkbox" id="ads-dry-run-checkbox" checked>
+              <label for="ads-dry-run-checkbox">Modo Simulación (Bypass de cobro real en Google Ads)</label>
+            </div>
+
+            <button type="button" id="btn-create-ads-campaign" class="btn btn-primary btn-large">
+              🚀 Crear Campaña en Google Ads
+            </button>
+          </div>
+
+          <!-- Progress Console -->
+          <div class="console-section">
+            <h3 class="console-title">Estado de la Campaña</h3>
+            <div id="ads-console-log" class="console-log">
+              <div class="log-line info">[00:00:00] Listo para configurar y lanzar tu campaña.</div>
+            </div>
+          </div>
+
+          <!-- Result Card -->
+          <div id="ads-result-card" class="result-card hidden">
+            <h3 id="ads-result-title">✅ ¡Campaña Creada Con Éxito!</h3>
+            <p id="ads-result-campaign-id">ID de Campaña: ads_mock_123456</p>
+            <p id="ads-result-message">Campaña simulada correctamente.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>© 2026 Aguamarina Joyería. Todos los derechos reservados. Sistema de Automatización Marketing & SEO.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

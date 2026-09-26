@@ -1,0 +1,43 @@
+{
+  "name": "aguamarina-marketing-automation",
+  "version": "1.0.0",
+  "description": "Automated marketing, local SEO optimization, digital advertising management, and video distribution system for Aguamarina Joyería.",
+  "main": "dist/config/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "start": "ts-node src/dashboard/server.ts",
+    "seo": "ts-node src/seo/cli.ts"
+  },
+  "keywords": [
+    "seo",
+    "marketing",
+    "google-ads",
+    "youtube-api",
+    "gemini-ai",
+    "aguamarina"
+  ],
+  "author": "Aguamarina Joyería",
+  "license": "ISC",
+  "dependencies": {
+    "@types/multer": "^2.2.0",
+    "cheerio": "^1.2.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "google-ads-api": "^17.1.0",
+    "googleapis": "^174.0.1",
+    "multer": "^2.2.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.25",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.19.43",
+    "@types/supertest": "^6.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4",
+    "ts-jest": "^29.4.12",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
