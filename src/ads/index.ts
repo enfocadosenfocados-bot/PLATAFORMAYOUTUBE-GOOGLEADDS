@@ -160,8 +160,10 @@ export class GoogleAdsCampaignService {
         developer_token: developerToken,
       });
 
+      const managerId = process.env.GOOGLE_ADS_MANAGER_ID ? sanitizeCustomerId(process.env.GOOGLE_ADS_MANAGER_ID) : undefined;
       const customer = client.Customer({
         customer_id: normalized.customerId,
+        login_customer_id: managerId || undefined,
         refresh_token: refreshToken || '',
       });
 
@@ -299,8 +301,10 @@ export class GoogleAdsCampaignService {
         developer_token: developerToken,
       });
 
+      const managerId = process.env.GOOGLE_ADS_MANAGER_ID ? sanitizeCustomerId(process.env.GOOGLE_ADS_MANAGER_ID) : undefined;
       const customer = client.Customer({
         customer_id: normalized.customerId,
+        login_customer_id: managerId || undefined,
         refresh_token: refreshToken || '',
       });
 
