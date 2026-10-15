@@ -24,7 +24,7 @@
     "cheerio": "^1.2.0",
     "dotenv": "^16.6.1",
     "express": "^4.22.2",
-    "google-ads-api": "^17.1.0",
+    "google-ads-api": "^25.1.0",
     "googleapis": "^174.0.1",
     "multer": "^2.2.0",
     "zod": "^3.25.76"

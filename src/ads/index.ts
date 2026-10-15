@@ -180,16 +180,16 @@ export class GoogleAdsCampaignService {
       const budgetResourceName = String(budgetResult.results[0].resource_name || '');
 
       // 2. Create Search Campaign
-      const campaignResult = await customer.campaigns.create([
-        {
-          name: normalized.name,
-          status: enums.CampaignStatus?.ENABLED ?? 2,
-          advertising_channel_type: enums.AdvertisingChannelType?.SEARCH ?? 2,
-          campaign_budget: budgetResourceName,
-          start_date: normalized.startDate,
-          end_date: normalized.endDate,
-        },
-      ]);
+      const campaignPayload: any = {
+        name: normalized.name,
+        status: enums.CampaignStatus?.ENABLED ?? 2,
+        advertising_channel_type: enums.AdvertisingChannelType?.SEARCH ?? 2,
+        campaign_budget: budgetResourceName,
+      };
+      if (normalized.startDate) campaignPayload.start_date = normalized.startDate;
+      if (normalized.endDate) campaignPayload.end_date = normalized.endDate;
+
+      const campaignResult = await customer.campaigns.create([campaignPayload]);
 
       const campaignResourceName = String(campaignResult.results[0].resource_name || '');
       const campaignId = campaignResourceName.split('/').pop() || 'cmp-live';
