@@ -74,7 +74,7 @@ export function getFallbackMetadata(request: GeminiMetadataRequest): VideoMetada
  */
 export async function generateVideoMetadata(request: GeminiMetadataRequest): Promise<GeminiMetadataResponse> {
   const apiKey = process.env.GEMINI_API_KEY || config.GEMINI_API_KEY;
-  const model = process.env.GEMINI_MODEL || config.GEMINI_MODEL || 'gemini-1.5-flash';
+  const model = process.env.GEMINI_MODEL || config.GEMINI_MODEL || 'gemini-2.5-flash';
 
   if (!apiKey) {
     return {
@@ -158,7 +158,7 @@ export interface VideoAnalysisResult {
 
 export async function analyzeVideoFrames(frames: string[], language: string = 'es'): Promise<VideoAnalysisResult> {
   const apiKey = process.env.GEMINI_API_KEY || config.GEMINI_API_KEY;
-  const model = process.env.GEMINI_MODEL || config.GEMINI_MODEL || 'gemini-1.5-flash';
+  const model = process.env.GEMINI_MODEL || config.GEMINI_MODEL || 'gemini-2.5-flash';
 
   if (!apiKey) {
     return {

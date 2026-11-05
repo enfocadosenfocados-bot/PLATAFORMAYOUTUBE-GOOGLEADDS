@@ -989,4 +989,86 @@ document.addEventListener('DOMContentLoaded', () => {
       btnCreateAdsCampaign.textContent = '🚀 Crear Campaña en Google Ads';
     }
   });
+
+  // Preset Thumbnails Selector Handler
+  const presetItems = document.querySelectorAll('.preset-thumb-item');
+  presetItems.forEach(item => {
+    item.addEventListener('click', () => {
+      presetItems.forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
+      const src = item.getAttribute('data-src');
+      if (src) {
+        thumbnailPreviewImg.src = src;
+        thumbnailPreviewImg.classList.remove('hidden');
+        thumbnailPlaceholder.classList.add('hidden');
+        generatedThumbnailUrl = src;
+
+        // Convert image to base64 so YouTube upload receives it
+        const tempImg = new Image();
+        tempImg.crossOrigin = 'anonymous';
+        tempImg.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = tempImg.naturalWidth || 1280;
+          canvas.height = tempImg.naturalHeight || 720;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(tempImg, 0, 0);
+          generatedThumbnailDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+          log(`Miniatura profesional seleccionada: ${item.querySelector('span').textContent}`, 'info');
+        };
+        tempImg.src = src;
+      }
+    });
+  });
+
+  // Preset Ad Templates (1-Click Fill)
+  const presetAdButtons = document.querySelectorAll('.btn-preset-ad');
+  presetAdButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.getAttribute('data-target');
+      if (target === 'bodas') {
+        adsNameInput.value = 'Campaña Anillos de Compromiso y Bodas - Aguamarina';
+        adsBudgetInput.value = '10';
+        adsKeywordsInput.value = 'anillos de compromiso costa rica, alianzas de boda oro, anillos de matrimonio san jose, argollas de matrimonio aguamarina';
+        adsHeadline1.value = 'Joyeria Aguamarina';
+        adsHeadline2.value = 'Anillos de Compromiso en Oro';
+        adsHeadline3.value = 'Alianzas de Boda Exclusivas';
+        adsDesc1.value = 'Encuentra el anillo de compromiso ideal fabricado con oro fino y piedras preciosas. Diseños únicos.';
+        adsDesc2.value = 'Alianzas de matrimonio personalizadas con garantía de por vida. Visita nuestra joyería en San José.';
+        logAds('Plantilla cargada: Anillos de Boda y Compromiso', 'info');
+      } else if (target === 'oro') {
+        adsNameInput.value = 'Colección Cadenas y Dijes en Oro 18k - Aguamarina';
+        adsBudgetInput.value = '8';
+        adsKeywordsInput.value = 'cadenas de oro 18k, dijes de oro costa rica, collares de oro aguamarina, cadenas tejidas oro';
+        adsHeadline1.value = 'Aguamarina Joyería Fina';
+        adsHeadline2.value = 'Cadenas y Dijes en Oro 18k';
+        adsHeadline3.value = 'Envíos a Todo Costa Rica';
+        adsDesc1.value = 'Brillo inigualable y acabados de lujo en cadenas y collares de oro fino de 18k. Compra segura online.';
+        adsDesc2.value = 'Piezas exclusivas ideales para regalos de aniversario o para resaltar tu estilo diario.';
+        logAds('Plantilla cargada: Cadenas & Oro 18k', 'info');
+      } else if (target === 'plata') {
+        adsNameInput.value = 'Joyería en Plata 925 Italiana Certificada - Aguamarina';
+        adsBudgetInput.value = '5';
+        adsKeywordsInput.value = 'plata 925 italiana, joyas de plata san jose, aretes de plata 925, pulseras de plata aguamarina';
+        adsHeadline1.value = 'Plata 925 Italiana Real';
+        adsHeadline2.value = 'Joyas Finas en Plata 925';
+        adsHeadline3.value = 'Precios de Mayorista';
+        adsDesc1.value = 'Diseños italianos de primera categoría en aretes, pulseras y gargantillas en auténtica plata de ley 925.';
+        adsDesc2.value = 'Resistencia y brillo duradero garantizados. Consulta el catálogo completo en nuestra web.';
+        logAds('Plantilla cargada: Plata 925 Italiana', 'info');
+      } else if (target === 'tienda') {
+        adsTypeSelect.value = 'LOCAL';
+        adsTypeSelect.dispatchEvent(new Event('change'));
+        adsNameInput.value = 'Tráfico Tienda Física San José - Aguamarina Centro Uno';
+        adsBudgetInput.value = '7';
+        adsStoreAddress.value = 'C. 14, San José, centro comercial centro uno';
+        adsStoreRadius.value = '20';
+        adsHeadline1.value = 'Joyeria Aguamarina San Jose';
+        adsHeadline2.value = 'Visítanos en Centro Uno';
+        adsHeadline3.value = 'Atención Personalizada';
+        adsDesc1.value = 'Visita nuestra tienda física en Calle 14, Centro Comercial Centro Uno. Toda la colección disponible.';
+        adsDesc2.value = 'Asesoría de expertos joyeros para elegir tus piezas favoritas. Parqueo y seguridad disponibles.';
+        logAds('Plantilla cargada: Visita Tienda San José (Local Ads)', 'info');
+      }
+    });
+  });
 });
